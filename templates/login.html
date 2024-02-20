@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5"> <!-- col-lg-6 zauzima 6 kolona za velike ekrane 6*8.33% col-xl-5 za manje ekrane -->
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <div class="mb-md-5 mt-md-4 pb-5">
+  
+                <h2 class="fw-bold mb-2 text-uppercase">Ulogujte se</h2>
+                <p class="text-white-50 mb-5">Molimo vas unesite email i sifru</p>
+                    <form action="" method="POST" autocomplete="on"> <!-- metoda post proverava da li su validni poslati podaci -->
+                        <div class="form-outline form-white mb-4">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" name="email"  class="form-control form-control-lg" required autocomplete="email" />
+                          
+                        </div>
+          
+                        <div class="form-outline form-white mb-4">
+                          <label class="form-label" for="lozinka">Sifra</label>
+                          <input type="password" name="lozinka"  class="form-control form-control-lg" required autocomplete="current-password" />  
+                        </div>
+                        <input type="submit" class="btn btn-outline-light btn-lg px-5" role="button" value="Prijavi se">
+                        <p></p>
+                        
+                    </form>
+              </div>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #ADD8E6;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link mx-2" href="{{ url_for('knjige') }}" ><h4>Knjige</h4></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('korisnici')  }}"><h4>Korisnici</h4></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('narudzbine') }}"><h4>Narudzbine</h4></a>
+        </li>
+        
+      </ul>
+    </div>
+    <form class="form-inline my-2 my-lg-0" >
+        <a href="{{ url_for('logout') }}" class="btn btn-primary" style="background-color: #2075b1;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+    </form>
+  </nav>
+
+<div class="container">
+    <div class="row my-5 justify-content-end">   <!-- my-5 zauzima 5 kolona od 12 to jest 8.33% * 5 = 45% boootstrap podeljen na 12 kolona-->
+      {% if (rola != 'kupac') %}
+        <a href="{{ url_for('dodavanje_knjige') }}" role="button" class="btn btn-primary" method="POST" style="background-color: #2075b1;"> <!-- prosledjujemo stranicu korisnik_novi da se ona otvori kada se klikne dugme dodaj korisnika bez .htmla  -->
+            Dodajte knjigu
+        </a>
+      {% endif %} 
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Naziv knjige</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Godina izdanja</th>
+            <th scope="col">Broj strana</th>
+            <th scope="col">Cena</th>
+            <th scope="col">Akcija</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for knjiga in knjige %}
+          <tr>
+            <th scope="row">{{ knjiga.naziv_knjige }}</th>
+            <td>{{ knjiga.autor }}</td>
+            <td>{{ knjiga.godina_izdanja }}</td>
+            <td>{{ knjiga.broj_strana }}</td>
+            <td>{{ knjiga.cena }}</td>
+            <td class="row">
+              {% if (rola != 'kupac') %}
+                <a href="{{ url_for('menjanje_knjige', id=knjiga.id) }}" role="button" class="text-primary mx-3">
+                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                </a>
+                <form action="{{ url_for('izbrisi_knjigu', id=knjiga.id) }}" method="POST" class="text-warning ">
+                    <button class="text-danger mx-1" onclick="return confirm('Da li ste sigurni da želite da obrišete knjigu?')">
+                      <i class="far fa-trash-alt"></i>
+                    </button>
+                  </form>
+              {% endif %}   
+                  <form action="{{ url_for('dodavanje_knjige_u_narudzbine', id=knjiga.id) }}" method="POST">
+                    <button type="submit" class="text-primary mx-3" onclick="return confirm('Da li ste sigurni da želite da kupite knjigu?')">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+                </form>
+                 
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+<style>
+    .nav-link:hover {
+        color: #2075b1 !important; 
+    }
+    .btn-primary:hover {
+        background-color: #293138 !important;
+    }
+   
+</style>
+{% endblock %}

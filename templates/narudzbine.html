@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row my-5 justify-content-end">       
+        <nav>
+            <form class="form-inline my-2 my-lg-0 mx-2">
+                <a href="{{ url_for('knjige') }}" class="btn btn-info" style="background-color: #2075b1;">
+                     Vratite se na stranicu za knjige
+                </a>
+            </form>
+        </nav>
+        <nav>
+            <form class="form-inline my-2 my-lg-0">
+                <a href="{{ url_for('logout') }}" class="btn btn-primary mr-3" style="background-color: #2075b1;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </form>
+        </nav>
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Naziv knjige</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Godina izdanja</th>
+                <th scope="col">Broj strana</th>
+                <th scope="col">Cena</th>
+                <th scope="col">Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for narudzbina in narudzbine %}
+                <tr>
+                    <th scope="row">{{ narudzbina.naziv_knjige }}</th>
+                    <td>{{ narudzbina.autor }}</td>
+                    <td>{{ narudzbina.godina_izdanja }}</td>
+                    <td>{{ narudzbina.broj_strana }}</td>
+                    <td>{{ narudzbina.cena }}</td>
+                    <td class="row">
+                        <form action="{{ url_for('brisanje_knjige_iz_narudzbine', id=narudzbina.id) }}" method="POST">
+                            <button class="text-danger mx-4" onclick="return confirm('Da li ste sigurni da želite da uklonite knjigu iz narudžbine?')">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
